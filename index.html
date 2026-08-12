@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomas Baltzer — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EE;
+    --ink:#14181F;
+    --steel:#4A5568;
+    --blueprint:#2E5EAA;
+    --blueprint-dim:#2E5EAA33;
+    --brass:#A8763E;
+    --line:#D8D3C7;
+    --white:#FFFFFF;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.disp{
+    font-family:'Space Grotesk', Arial, sans-serif;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.02em;
+  }
+  a{color:var(--blueprint); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--blueprint);
+    outline-offset:3px;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+
+  /* --- blueprint corner marks, used sparingly as section framing --- */
+  .sheet{position:relative; padding:76px 0; border-top:1px solid var(--line);}
+  .sheet:first-of-type{border-top:none;}
+  .corner{
+    position:absolute; width:16px; height:16px; pointer-events:none;
+  }
+  .corner::before, .corner::after{content:""; position:absolute; background:var(--brass);}
+  .corner.tl{top:24px; left:16px;}
+  .corner.tl::before{width:16px; height:1.5px; top:0; left:0;}
+  .corner.tl::after{width:1.5px; height:16px; top:0; left:0;}
+  @media (min-width:760px){
+    .corner.tl{left:8px;}
+  }
+
+  .tag{
+    display:inline-block;
+    font-size:12px;
+    text-transform:uppercase;
+    color:var(--brass);
+    border:1px solid var(--brass);
+    padding:2px 8px;
+    border-radius:2px;
+    margin-bottom:14px;
+  }
+
+  /* ---------- HERO / TITLE BLOCK ---------- */
+  header.hero{
+    background:var(--ink);
+    color:var(--paper);
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero .grid-bg{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--blueprint-dim) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blueprint-dim) 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:0.35;
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+  }
+  .hero-inner{
+    position:relative;
+    padding:90px 32px 0 32px;
+    max-width:var(--maxw);
+    margin:0 auto;
+  }
+  .eyebrow-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:12px; color:#9AA7BF;
+    border-bottom:1px solid #2B3444;
+    padding-bottom:14px; margin-bottom:48px;
+    flex-wrap:wrap; gap:8px;
+  }
+  h1.name{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    font-weight:600;
+    margin:0 0 8px 0;
+    line-height:0.98;
+  }
+  p.role{
+    font-size:clamp(1.05rem, 2.4vw, 1.4rem);
+    font-family:'Source Serif 4', serif;
+    color:#C7CEDB;
+    max-width:640px;
+    margin:0 0 40px 0;
+  }
+  p.role strong{color:var(--paper); font-weight:600;}
+
+  /* title block strip, echoing an engineering drawing's info box */
+  .title-block{
+    margin-top:40px;
+    border-top:1px solid #2B3444;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+  }
+  @media (min-width:640px){
+    .title-block{grid-template-columns:repeat(4, 1fr);}
+  }
+  .tb-cell{
+    border-right:1px solid #2B3444;
+    border-bottom:1px solid #2B3444;
+    padding:16px 20px;
+  }
+  .tb-cell:last-child{border-right:none;}
+  .tb-label{font-size:10px; color:#7C879E; text-transform:uppercase; margin-bottom:6px;}
+  .tb-value{font-size:14px; color:var(--paper);}
+  .tb-value a{color:var(--paper);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sheet-head{
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:36px;
+  }
+  .sheet-num{
+    font-size:13px; color:var(--brass);
+  }
+  h2.sheet-title{
+    font-size:clamp(1.5rem, 3.2vw, 2.1rem);
+    font-weight:600;
+    margin:0;
+  }
+  .sheet-head::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  @media (min-width:760px){
+    .about-grid{grid-template-columns:1.1fr 0.9fr;}
+  }
+  .lede{font-size:1.2rem; color:var(--ink);}
+  .stat-list{list-style:none; margin:0; padding:0; display:grid; gap:18px;}
+  .stat-list li{border-left:2px solid var(--blueprint); padding-left:16px;}
+  .stat-num{display:block; font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:600; color:var(--ink);}
+  .stat-label{font-size:13px; color:var(--steel);}
+
+  /* ---------- EXPERIENCE ---------- */
+  .role-card{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:6px 24px;
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .role-card:last-child{border-bottom:none;}
+  @media (min-width:700px){
+    .role-card{grid-template-columns:200px 1fr;}
+  }
+  .role-meta .role-org{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem;}
+  .role-meta .role-when{font-size:12px; color:var(--steel); margin-top:2px;}
+  .role-body .role-title{font-weight:600; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;}
+  .role-body p{margin:0 0 8px 0; color:var(--steel); font-size:0.98rem;}
+  .placeholder{background:#FCE9C9; padding:0 4px; border-radius:2px;}
+
+  /* ---------- VENTURES ---------- */
+  .venture-grid{display:grid; gap:24px; grid-template-columns:1fr;}
+  @media (min-width:700px){.venture-grid{grid-template-columns:1fr 1fr;}}
+  .venture{
+    background:var(--white);
+    border:1px solid var(--line);
+    padding:26px;
+    position:relative;
+  }
+  .venture .v-tag{font-size:11px; color:var(--brass); text-transform:uppercase; margin-bottom:10px; display:block;}
+  .venture h3{margin:0 0 10px 0; font-size:1.2rem;}
+  .venture p{color:var(--steel); font-size:0.96rem; margin:0;}
+
+  /* ---------- GLOBAL / MAP-ISH ---------- */
+  .globe-row{display:grid; gap:32px; grid-template-columns:1fr;}
+  @media (min-width:760px){.globe-row{grid-template-columns:1fr 1fr;}}
+  .coord-list{list-style:none; margin:0; padding:0; columns:2; gap:10px;}
+  .coord-list li{font-size:0.9rem; padding:5px 0; break-inside:avoid; color:var(--steel);}
+  .coord-list li::before{content:"— "; color:var(--brass);}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-item{padding:18px 0; border-bottom:1px solid var(--line);}
+  .edu-item:last-child{border-bottom:none;}
+  .edu-item .e-school{font-family:'Space Grotesk',sans-serif; font-weight:600;}
+  .edu-item .e-detail{color:var(--steel); font-size:0.95rem; margin-top:4px;}
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--paper);
+    padding:70px 32px 40px;
+  }
+  footer .wrap{max-width:var(--maxw);}
+  footer h2{font-size:clamp(1.8rem,4vw,2.6rem); margin:0 0 18px 0;}
+  footer p{color:#C7CEDB; max-width:520px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px; margin-top:28px;}
+  .contact-links a{
+    border:1px solid #3A4356;
+    color:var(--paper);
+    padding:10px 18px;
+    font-size:14px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .contact-links a:hover{border-color:var(--blueprint); text-decoration:none; color:#8FB2E8;}
+  .foot-meta{margin-top:56px; padding-top:20px; border-top:1px solid #2B3444; font-size:11px; color:#6C7791; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="eyebrow-row">
+      <span class="mono">DRAWING NO. TB—2026</span>
+      <span class="mono">MUNICH, DE</span>
+    </div>
+    <h1 class="name">Tomas<br>Baltzer</h1>
+    <p class="role">Mechanical engineer turned <strong>MBA candidate</strong>, working the seam between technical execution and strategic decision-making — for teams that need someone fluent in both.</p>
+
+    <div class="title-block">
+      <div class="tb-cell">
+        <div class="tb-label">Current Role</div>
+        <div class="tb-value">PM Intern, BMW HQ</div>
+      </div>
+      <div class="tb-cell">
+        <div class="tb-label">Program</div>
+        <div class="tb-value">MBA, Culverhouse College of Business</div>
+      </div>
+      <div class="tb-cell">
+        <div class="tb-label">Graduating</div>
+        <div class="tb-value">2028</div>
+      </div>
+      <div class="tb-cell">
+        <div class="tb-label">Target</div>
+        <div class="tb-value">Consulting / Corporate Strategy</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ABOUT -->
+  <section class="sheet" id="about">
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <span class="sheet-num mono">SHEET 01</span>
+      <h2 class="sheet-title">Profile</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p class="lede">I started in mechanical engineering because I wanted to understand how things actually work. I moved toward strategy because I wanted to understand why organizations decide what to build in the first place.</p>
+        <p>That path has taken me through two automakers, a NASA-affiliated research post, and two startups I co-founded and helped take through funding — all while living and working across five countries. I'm now pairing that technical grounding with an MBA, aimed at roles where engineering literacy and strategic thinking need to sit in the same room.</p>
+      </div>
+      <ul class="stat-list">
+        <li><span class="stat-num">5</span><span class="stat-label">Countries lived in</span></li>
+        <li><span class="stat-num">~50</span><span class="stat-label">Countries traveled, mostly solo</span></li>
+        <li><span class="stat-num">2</span><span class="stat-label">Startups co-founded and funded</span></li>
+        <li><span class="stat-num">3.866</span><span class="stat-label">Graduate GPA</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="sheet" id="experience">
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <span class="sheet-num mono">SHEET 02</span>
+      <h2 class="sheet-title">Experience</h2>
+    </div>
+
+    <div class="role-card">
+      <div class="role-meta">
+        <div class="role-org">BMW</div>
+        <div class="role-when mono placeholder">[Start] – Present</div>
+      </div>
+      <div class="role-body">
+        <div class="role-title">Project Management Intern — Munich HQ</div>
+        <p class="placeholder">[Add 1–2 sentences on scope: which program/team, and one concrete deliverable or process you drove.]</p>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-meta">
+        <div class="role-org">Mercedes-Benz</div>
+        <div class="role-when mono placeholder">[Dates]</div>
+      </div>
+      <div class="role-body">
+        <div class="role-title placeholder">[Your Title]</div>
+        <p class="placeholder">[Add 1–2 sentences on scope and a quantified outcome — e.g. cost, cycle time, or process improvement.]</p>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-meta">
+        <div class="role-org">NASA-Affiliated Research</div>
+        <div class="role-when mono placeholder">[Dates]</div>
+      </div>
+      <div class="role-body">
+        <div class="role-title placeholder">[Your Title / Research Focus]</div>
+        <p>Conducted research at a NASA-affiliated site in Neustrelitz, Germany. <span class="placeholder">[Add the research focus and one outcome — publication, dataset, or system improvement.]</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTURES -->
+  <section class="sheet" id="ventures">
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <span class="sheet-num mono">SHEET 03</span>
+      <h2 class="sheet-title">Ventures</h2>
+    </div>
+    <p style="color:var(--steel); margin-top:-16px; margin-bottom:28px; max-width:640px;">Co-founded and funded through the University of Alabama's commercialization program.</p>
+    <div class="venture-grid">
+      <div class="venture">
+        <span class="v-tag mono">Co-Founder</span>
+        <h3>SolarSense</h3>
+        <p class="placeholder">[One or two sentences: what it does, what problem it solves, and the funding milestone reached.]</p>
+      </div>
+      <div class="venture">
+        <span class="v-tag mono">Co-Founder</span>
+        <h3>PowerPulse</h3>
+        <p class="placeholder">[One or two sentences: what it does, what problem it solves, and the funding milestone reached.]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL -->
+  <section class="sheet" id="global">
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <span class="sheet-num mono">SHEET 04</span>
+      <h2 class="sheet-title">Global Fluency</h2>
+    </div>
+    <div class="globe-row">
+      <div>
+        <p>I've lived in five countries and traveled to roughly fifty, most of it solo — which means most of my cross-cultural judgment was built without a support structure to fall back on. That's the same instinct I bring to unfamiliar problems at work: get on the ground, figure out the local logic, and move.</p>
+      </div>
+      <ul class="coord-list mono">
+        <li>Munich, Germany — current base</li>
+        <li>Seoul, South Korea — Yonsei University</li>
+        <li>Neustrelitz, Germany — research posting</li>
+        <li class="placeholder">[Add remaining 2 countries lived in]</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="sheet" id="education">
+    <div class="corner tl" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <span class="sheet-num mono">SHEET 05</span>
+      <h2 class="sheet-title">Education</h2>
+    </div>
+
+    <div class="edu-item">
+      <div class="e-school">Culverhouse College of Business, University of Alabama</div>
+      <div class="e-detail">MBA Candidate — STEM to MBA Program &middot; Graduating 2028 &middot; GPA 3.866</div>
+    </div>
+    <div class="edu-item">
+      <div class="e-school placeholder">[Undergraduate Institution]</div>
+      <div class="e-detail placeholder">[B.S. Mechanical Engineering &middot; Graduation year]</div>
+    </div>
+    <div class="edu-item">
+      <div class="e-school">Yonsei University</div>
+      <div class="e-detail">Study Abroad</div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="tag mono">Sheet 06 / Contact</span>
+    <h2>Let's talk.</h2>
+    <p>Open to consulting and corporate strategy conversations — case interviews, informational chats, or roles starting after graduation in 2028.</p>
+    <div class="contact-links">
+      <a href="mailto:your.email@example.com">your.email@example.com</a>
+      <a href="https://linkedin.com/in/your-handle" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="#" target="_blank" rel="noopener">Resume (PDF) ↗</a>
+    </div>
+    <div class="foot-meta">
+      <span>TOMAS BALTZER — PORTFOLIO</span>
+      <span>REV A &middot; 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
